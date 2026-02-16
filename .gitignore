@@ -15,3 +15,12 @@ projects/workspace/**
 
 # Ignore any log files
 *.log
+node_modules
+
+# Mining Data
+projects/data_mining/downloads/**
+!projects/data_mining/downloads/
+!projects/data_mining/downloads/.gitkeep
+
+# Exclude binaries
+*.exe

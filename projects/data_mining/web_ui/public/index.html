@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrismAId Research Engine</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="app.js" defer></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>PrismAId</h2>
+            </div>
+
+            <nav>
+                <button class="nav-btn active" data-tab="dashboard">📊 Dashboard</button>
+                <button class="nav-btn" data-tab="new-review">➕ New Review (PRISMA)</button>
+                <button class="nav-btn" data-tab="project-view" id="btn-project-view" disabled>📂 Current
+                    Project</button>
+            </nav>
+
+            <div class="project-list" id="project-list">
+                <h3>Recent Projects</h3>
+                <ul id="projects-ul">
+                    <!-- Loaded via API -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- VIEW: DASHBOARD -->
+            <section id="dashboard" class="view active">
+                <h1>Dashboard</h1>
+                <div class="stats-grid">
+                    <div class="card">
+                        <h3>Total Projects</h3>
+                        <p id="total-projects">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Active Tasks</h3>
+                        <p id="active-tasks">0</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW: NEW REVIEW (PRISMA) -->
+            <section id="new-review" class="view">
+                <h1>Start Systematic Review (AI-Assisted)</h1>
+                <div class="ai-wizard">
+                    <div class="chat-box" id="wizard-chat">
+                        <div class="ai-msg">
+                            <p>Olá! Descreva sua pesquisa. Ex: "Quero pesquisar sobre o uso da casca de caju para
+                                tratamento de água nos últimos 10 anos."</p>
+                            <p>Eu vou estruturar seu protocolo PRISMA (PICOS, Keywords, etc.) para você.</p>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <textarea id="wizard-input" placeholder="Descreva sua pesquisa aqui..."></textarea>
+                        <button id="btn-wizard-send" class="primary-btn">Analyze (AI)</button>
+                    </div>
+
+                    <!-- CONFIRMATION CARD (Hidden initially) -->
+                    <div id="protocol-preview" class="protocol-card" style="display:none;">
+                        <h3>Protocol Draft</h3>
+                        <div class="field-group">
+                            <label>Title</label>
+                            <input type="text" id="proto-title">
+                        </div>
+                        <div class="field-group">
+                            <label>Research Question</label>
+                            <textarea id="proto-question"></textarea>
+                        </div>
+                        <div class="field-group">
+                            <label>Search String</label>
+                            <textarea id="proto-string"></textarea>
+                        </div>
+                        <div class="picos-grid">
+                            <div><label>Population</label><input id="proto-p"></div>
+                            <div><label>Intervention</label><input id="proto-i"></div>
+                            <div><label>Comparator</label><input id="proto-c"></div>
+                            <div><label>Outcome</label><input id="proto-o"></div>
+                            <div><label>Study Design</label><input id="proto-s"></div>
+                        </div>
+
+                        <button id="btn-confirm-project" class="success-btn">✅ Confirm & Create Project</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW: PROJECT DETAIL -->
+            <section id="project-view" class="view">
+                <header class="project-header">
+                    <h2 id="current-project-title">Select a Project</h2>
+                    <div class="prisma-flow">
+                        <!-- PRISMA Flow Visualization -->
+                        <div class="prisma-node" id="prisma-identification">
+                            Identification
+                            <span class="count" id="count-total">0</span>
+                        </div>
+                        <div class="arrow">→</div>
+                        <div class="prisma-node" id="prisma-screening">
+                            Screening
+                            <span class="count" id="count-screened">0</span>
+                        </div>
+                        <div class="arrow">→</div>
+                        <div class="prisma-node" id="prisma-included">
+                            Included
+                            <span class="count" id="count-relevant">0</span>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="tabs">
+                    <button class="tab-btn active" data-subtab="screening">1. Screening (AI)</button>
+                    <button class="tab-btn" data-subtab="snowballing">2. Snowballing</button>
+                    <button class="tab-btn" data-subtab="downloads">3. Downloads</button>
+                </div>
+
+                <div class="subtab-content active" id="screening">
+                    <div class="actions">
+                        <button id="btn-run-screening" class="action-btn">▶ Run AI Screening</button>
+                    </div>
+                    <div class="results-preview">
+                        <h3>Screening Results</h3>
+                        <div id="screening-list" class="file-list"></div>
+                    </div>
+                </div>
+
+                <div class="subtab-content" id="snowballing">
+                    <div class="actions">
+                        <input type="number" id="seed-count" value="10" style="width: 60px;">
+                        <button id="btn-generate-seeds" class="action-btn">Select Top Citations</button>
+                        <button id="btn-run-snowball" class="action-btn">▶ Run Snowball Search</button>
+                    </div>
+                    <div id="snowball-list" class="file-list"></div>
+                </div>
+
+                <div class="subtab-content" id="downloads">
+                    <div class="actions">
+                        <button id="btn-run-download" class="action-btn">▶ Download PDFs</button>
+                    </div>
+                </div>
+
+                <!-- TERMINAL / LOGS -->
+                <div class="terminal">
+                    <div class="term-header">Logs / Output</div>
+                    <pre id="term-output"></pre>
+                </div>
+
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>

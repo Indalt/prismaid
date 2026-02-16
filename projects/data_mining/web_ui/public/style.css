@@ -1,0 +1,270 @@
+:root {
+    --bg-dark: #1e1e2e;
+    --bg-sidebar: #181825;
+    --text-primary: #cdd6f4;
+    --accent: #89b4fa;
+    --success: #a6e3a1;
+    --border: #313244;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    height: 100vh;
+    display: flex;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: var(--bg-sidebar);
+    padding: 20px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    text-align: left;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.nav-btn.active,
+.nav-btn:hover {
+    background-color: var(--border);
+}
+
+.project-list {
+    margin-top: 30px;
+}
+
+.project-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.project-list li {
+    padding: 5px 10px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.project-list li:hover {
+    opacity: 1;
+    background: var(--border);
+}
+
+/* Main */
+.main-content {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+}
+
+/* Cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: var(--bg-sidebar);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+}
+
+/* PRISMA Flow */
+.prisma-flow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+    background: var(--bg-sidebar);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.prisma-node {
+    background: var(--border);
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+}
+
+.prisma-node .count {
+    display: block;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--accent);
+}
+
+/* Wizard AI */
+.ai-wizard {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.chat-box {
+    background: #11111b;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    min-height: 100px;
+}
+
+.ai-msg {
+    background: #313244;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input-area textarea {
+    flex: 1;
+    height: 60px;
+    background: var(--bg-sidebar);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.protocol-card {
+    background: var(--bg-sidebar);
+    border: 1px solid var(--accent);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.field-group {
+    margin-bottom: 15px;
+}
+
+.field-group label {
+    display: block;
+    font-size: 0.9em;
+    color: var(--accent);
+    margin-bottom: 5px;
+}
+
+.field-group input,
+.field-group textarea {
+    width: 100%;
+    background: #1e1e2e;
+    border: 1px solid #45475a;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.picos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.success-btn {
+    background: var(--success);
+    color: #1e1e2e;
+    border: none;
+    padding: 15px;
+    width: 100%;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Terminal */
+.terminal {
+    margin-top: 20px;
+    background: #11111b;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.term-header {
+    background: #313244;
+    padding: 5px 10px;
+    font-size: 0.8em;
+}
+
+#term-output {
+    padding: 10px;
+    height: 200px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 0.9em;
+    white-space: pre-wrap;
+    margin: 0;
+}
+
+/* Tabs */
+.tabs {
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+}
+
+.tab-btn.active {
+    border-bottom-color: var(--accent);
+    color: var(--accent);
+}
+
+.subtab-content {
+    display: none;
+}
+
+.subtab-content.active {
+    display: block;
+}
+
+.action-btn {
+    background: var(--border);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 8px 15px;
+    cursor: pointer;
+    margin-right: 10px;
+}
